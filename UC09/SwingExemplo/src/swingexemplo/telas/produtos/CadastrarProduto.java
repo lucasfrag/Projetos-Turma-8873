@@ -5,7 +5,7 @@
 package swingexemplo.telas.produtos;
 
 import javax.swing.JOptionPane;
-import swingexemplo.Produto;
+import swingexemplo.*;
 
 /**
  *
@@ -244,7 +244,7 @@ public class CadastrarProduto extends javax.swing.JFrame {
 
                             log.setText("Último produto cadastrado: " + p.getNome() + " (R$" + p.getPreco() + " x " + p.getQuantidade() + " unidades)");
                             total.setText("Valor total: R$" + resultado);
-
+                            ListaProduto.Adicionar(p);
                             JOptionPane.showMessageDialog(null, "Produto salvo com sucesso!");
                         }
                     }

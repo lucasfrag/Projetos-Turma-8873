@@ -4,6 +4,11 @@
  */
 package swingexemplo.telas.produtos;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import swingexemplo.*;
+
 /**
  *
  * @author tiluc
@@ -29,13 +34,23 @@ public class PrincipalProdutos extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        atualizar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         AdicionarProduto = new javax.swing.JButton();
         Sair = new javax.swing.JButton();
+        excluir = new javax.swing.JButton();
+        vender = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -44,6 +59,13 @@ public class PrincipalProdutos extends javax.swing.JFrame {
 
         jLabel2.setText("Abaixo, está a lista de todos os produtos cadastrados:");
 
+        atualizar.setText("Atualizar");
+        atualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -51,9 +73,14 @@ public class PrincipalProdutos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(atualizar)
+                        .addGap(14, 14, 14))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -61,23 +88,18 @@ public class PrincipalProdutos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(atualizar))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        // Criamos a tabela
+        DefaultTableModel tabela = montarTabela();
+        jTable1.setModel(tabela);
         jScrollPane1.setViewportView(jTable1);
 
+        AdicionarProduto.setForeground(new java.awt.Color(0, 153, 204));
         AdicionarProduto.setText("+ Adicionar Produto");
         AdicionarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,6 +114,22 @@ public class PrincipalProdutos extends javax.swing.JFrame {
             }
         });
 
+        excluir.setForeground(new java.awt.Color(255, 0, 0));
+        excluir.setText("Excluir");
+        excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirActionPerformed(evt);
+            }
+        });
+
+        vender.setForeground(new java.awt.Color(255, 153, 0));
+        vender.setText("Vender");
+        vender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                venderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -99,6 +137,10 @@ public class PrincipalProdutos extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(AdicionarProduto)
+                .addGap(18, 18, 18)
+                .addComponent(vender)
+                .addGap(18, 18, 18)
+                .addComponent(excluir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Sair)
                 .addContainerGap())
@@ -110,7 +152,9 @@ public class PrincipalProdutos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AdicionarProduto)
-                    .addComponent(Sair)))
+                    .addComponent(Sair)
+                    .addComponent(excluir)
+                    .addComponent(vender)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,7 +173,7 @@ public class PrincipalProdutos extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 4, Short.MAX_VALUE))
         );
 
         pack();
@@ -146,6 +190,76 @@ public class PrincipalProdutos extends javax.swing.JFrame {
         //System.exit(0); // Fechar tudo
         dispose(); // Voltar
     }//GEN-LAST:event_SairActionPerformed
+
+    private DefaultTableModel montarTabela() {
+        String[] colunas = {"ID", "Nome", "Preço", "Quantidade"};
+
+        // Criamos a tabela
+        DefaultTableModel tabela = new DefaultTableModel(colunas, 0);
+
+        // Pegar os dados da lista de produtos
+        System.out.println("Pegando dados da lista...");
+        ArrayList<Produto> lista = ListaProduto.Listar();
+
+        for (int i = 0; i < lista.size(); i++) {
+            Produto p = lista.get(i);
+            String[] linha = {
+                Integer.toString(p.getId()),
+                p.getNome(),
+                Double.toString(p.getPreco()),
+                Integer.toString(p.getQuantidade())
+            };
+
+            tabela.addRow(linha);
+        };
+        
+        return tabela;
+    }
+    
+    
+    private int getPosicao() {
+        int posicao = jTable1.getSelectedRow();
+        
+        if(posicao == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um item da tabela.");
+        }
+        
+        return posicao;
+    }
+    
+    private void atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarActionPerformed
+        // TODO add your handling code here
+        DefaultTableModel tabela = montarTabela();
+        jTable1.setModel(tabela);
+        jScrollPane1.setViewportView(jTable1);
+    }//GEN-LAST:event_atualizarActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // TODO add your handling code here:
+        DefaultTableModel tabela = montarTabela();
+        jTable1.setModel(tabela);
+        jScrollPane1.setViewportView(jTable1);
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
+        // TODO add your handling code here:
+        ListaProduto.Excluir(getPosicao());
+        
+        DefaultTableModel tabela = montarTabela();
+        jTable1.setModel(tabela);
+        jScrollPane1.setViewportView(jTable1);
+    }//GEN-LAST:event_excluirActionPerformed
+
+    private void venderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_venderActionPerformed
+        // TODO add your handling code here:
+        
+        int quantidade = ListaProduto.Listar().get(getPosicao()).getQuantidade();
+        ListaProduto.Listar().get(getPosicao()).setQuantidade(quantidade - 1);
+
+        DefaultTableModel tabela = montarTabela();
+        jTable1.setModel(tabela);
+        jScrollPane1.setViewportView(jTable1);
+    }//GEN-LAST:event_venderActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,11 +302,14 @@ public class PrincipalProdutos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AdicionarProduto;
     private javax.swing.JButton Sair;
+    private javax.swing.JButton atualizar;
+    private javax.swing.JButton excluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton vender;
     // End of variables declaration//GEN-END:variables
 }
