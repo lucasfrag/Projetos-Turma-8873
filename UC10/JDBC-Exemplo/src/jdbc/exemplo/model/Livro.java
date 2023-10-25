@@ -76,9 +76,10 @@ public class Livro {
     /* Métodos para tratamento de datas */
     
     // Exemplo: 22/10/2023 para 2023-10-22
-    public static String converterParaFormatoBanco(String dataAntiga) throws ParseException {
+    public static String converterParaFormatoBanco(String dataAntiga) {
+        String dataFormatoBanco;
         String[] partesData = dataAntiga.split("/");
-        String dataFormatoBanco = partesData[2] + "-" + partesData[1] + "-" + partesData[0];
+        dataFormatoBanco = partesData[2] + "-" + partesData[1] + "-" + partesData[0];
         return dataFormatoBanco;
     }
     // Exemplo: 2023-10-22 para 22/10/2023 
