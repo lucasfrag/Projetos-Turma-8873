@@ -228,7 +228,7 @@ public class LivroLista extends javax.swing.JFrame {
                     int column = e.getColumn();
                     EditavelTableModel model = (EditavelTableModel) e.getSource();
 
-                    System.out.println(model.getValueAt(row, 0));
+                    //System.out.println(model.getValueAt(row, 0));
                     String idString = (String) model.getValueAt(row, 0);
                     int id = Integer.parseInt(idString); 
                     String titulo = (String) model.getValueAt(row, 1);
@@ -290,7 +290,7 @@ public class LivroLista extends javax.swing.JFrame {
                 lido,};
             tabela.addRow(linha);
         }
-
+        
         return tabela;
     }
 

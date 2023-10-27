@@ -1,0 +1,4 @@
+com\senacead\jpa\exemplo\JPAExemplo.class
+com\senacead\jpa\exemplo\model\JPAUtil.class
+com\senacead\jpa\exemplo\model\LivroJPA.class
+com\senacead\jpa\exemplo\model\Livro.class
