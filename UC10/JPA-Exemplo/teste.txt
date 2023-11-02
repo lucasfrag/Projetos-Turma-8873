@@ -1,0 +1,2 @@
+COMPROVANTE DE VENDA
+O item x foi vendido.
